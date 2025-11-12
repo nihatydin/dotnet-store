@@ -6,26 +6,21 @@ namespace dotnet_store.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    private readonly DataContext _context;
+    public HomeController(DataContext context)
     {
-        _logger = logger;
+        _context = context;
     }
 
     public IActionResult Index()
     {
-        return View();
+        var products = _context.Products.ToList();
+        return View(products);
     }
 
-    public IActionResult Privacy()
+    public IActionResult List()
     {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        var products = _context.Products.ToList();
+        return View(products);
     }
 }

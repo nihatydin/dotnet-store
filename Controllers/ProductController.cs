@@ -14,6 +14,10 @@ public class ProductController : Controller
 
     public ActionResult Index()
     {
+        return View();
+    }
+    public ActionResult List()
+    {
         var products = _context.Products.ToList();
         return View(products);
     }
