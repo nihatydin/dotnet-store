@@ -9,4 +9,6 @@ public class Product
     public string? Description { get; set; }
     public bool Active { get; set; }
     public bool isHome { get; set; }
+    public int CategoryId { get; set; }
+    public Category Category { get; set; } = null!;
 }
