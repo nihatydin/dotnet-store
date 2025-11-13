@@ -18,7 +18,17 @@ public class ProductController : Controller
     }
     public ActionResult List()
     {
-        var products = _context.Products.Where(p=>p.Active).ToList();
+        var products = _context.Products.Where(p => p.Active).ToList();
         return View(products);
+    }
+    public ActionResult Details(int id)
+    {
+        //var product = _context.Products.Find(id); this will return even inactive products
+        var product = _context.Products.FirstOrDefault(p => p.Id == id && p.Active);
+        if (product == null)
+        {
+            return NotFound();
+        }
+        return View(product);
     }
 }

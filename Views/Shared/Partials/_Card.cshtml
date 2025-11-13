@@ -6,13 +6,13 @@
                         </div>
 
                         <div class="border-top info-wrap">
-                            <a class="float-end btn btn-light">
+                            <a href="#" class="float-end btn btn-light">
                                 <i class="fa-regular fa-heart"></i>
                             </a>
-                            <a style="text-decoration:none" asp-controller="Product" asp-action="Details" asp-action-id="@Model.Id  class="title text-truncate">@Model.ProductName</a>
+                            <a  asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id"  class="title text-truncate text-success">@Model.ProductName</a>
                             <div class="price-wrap">
-                                <span class="price-discount">@Model.Price</span>
-                               @* <del class="price">49.999 ₺</del>*@
+                                <small><del class="price text-muted">@(@Model.Price * 1.2) ₺</del></small>
+                                <span class="price-discount">@Model.Price ₺</span>                      
                             </div>
                         </div>
                     </div>
