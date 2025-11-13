@@ -31,6 +31,9 @@ public class ProductController : Controller
         {
             return NotFound();
         }
+
+        ViewData["SimilarProducts"] = _context.Products.Where(p=> p.CategoryId == product.CategoryId && p.Id != product.Id && p.Active).Take(4).ToList();
+
         return View(product);
     }
 }
