@@ -14,13 +14,8 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var products = _context.Products.ToList();
+        var products = _context.Products.Where(p => p.Active && p.isHome).ToList();
         return View(products);
     }
 
-    public IActionResult List()
-    {
-        var products = _context.Products.ToList();
-        return View(products);
-    }
 }
