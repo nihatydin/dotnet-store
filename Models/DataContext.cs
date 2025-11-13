@@ -10,10 +10,20 @@ public class DataContext : DbContext
     }
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
+    public DbSet<Slider> Sliders { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Slider>().HasData(
+            new List<Slider>()
+            {
+                new Slider() { Id = 1, Title="First Slider", Description="This is the first slider", Image="slider-1.jpeg", Index=0, isActive=true },
+                new Slider() { Id = 2, Title="Second Slider", Description="This is the second slider", Image="slider-2.jpeg", Index=1, isActive=true },
+                new Slider() { Id = 3, Title="Third Slider", Description="This is the third slider", Image="slider-3.jpeg", Index=2, isActive=true },
+            }
+        );
 
         modelBuilder.Entity<Category>().HasData(
             new List<Category>()

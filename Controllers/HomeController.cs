@@ -16,6 +16,7 @@ public class HomeController : Controller
     {
         var products = _context.Products.Where(p => p.Active && p.isHome).ToList();
         ViewData["Categories"] = _context.Categories.ToList();
+        ViewData["Sliders"] = _context.Sliders.Where(s => s.isActive).ToList();
         return View(products);
     }
 
