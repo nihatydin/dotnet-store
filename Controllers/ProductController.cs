@@ -16,9 +16,11 @@ public class ProductController : Controller
     {
         return View();
     }
-    public ActionResult List()
+
+    // Active products by category
+    public ActionResult List(string url)
     {
-        var products = _context.Products.Where(p => p.Active).ToList();
+        var products = _context.Products.Where(p => p.Active && p.Category.Url == url).ToList();
         return View(products);
     }
     public ActionResult Details(int id)
