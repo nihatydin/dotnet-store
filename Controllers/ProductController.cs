@@ -18,10 +18,22 @@ public class ProductController : Controller
     }
 
     // Active products by category
-    public ActionResult List(string url)
+    public ActionResult List(string url, string q)
     {
-        var products = _context.Products.Where(p => p.Active && p.Category.Url == url).ToList();
-        return View(products);
+        var searchResults = _context.Products.Where(p => p.Active);
+
+        if(!string.IsNullOrEmpty(url))
+        {
+            searchResults = searchResults.Where(p => p.Category.Url == url);
+        }
+
+        if (!string.IsNullOrEmpty(q))
+        { 
+            searchResults = searchResults.Where(p=> p.ProductName.ToLower().Contains(q.ToLower()) || p.Description.Contains(q));
+            ViewData["SearchQuery"] = q;
+        }
+
+        return View(searchResults.ToList());
     }
     public ActionResult Details(int id)
     {
