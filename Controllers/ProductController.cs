@@ -20,13 +20,15 @@ public class ProductController : Controller
     // Active products by category
     public ActionResult List(string url, string q)
     {
+        // get active products
         var searchResults = _context.Products.Where(p => p.Active);
-
+        
+        // filter by category url
         if(!string.IsNullOrEmpty(url))
         {
             searchResults = searchResults.Where(p => p.Category.Url == url);
         }
-
+        // search by query
         if (!string.IsNullOrEmpty(q))
         { 
             searchResults = searchResults.Where(p=> p.ProductName.ToLower().Contains(q.ToLower()) || p.Description.Contains(q));
