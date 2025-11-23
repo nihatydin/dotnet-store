@@ -1,4 +1,4 @@
-@model List<Category>
+@model List<CategoryGetModel>
 @{
     Layout = "_AdminLayout";
 }
@@ -30,7 +30,7 @@
                                         <td>@category.Id</td>
                                         <td>@category.CategoryName</td>
                                         <td>@category.Url</td>
-                                        <td>@category.Products.Count</td>
+                                        <td>@category.ProductCount</td>
                                         <td>
                                             <a href="kategori-ekle.html" class="btn btn-primary btn-sm">
                                                 <i class="fa-solid fa-pen-to-square"></i>
