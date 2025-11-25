@@ -7,8 +7,8 @@
             <div class="col">
                 <div class="card shadow">
                     <div class="card-header py-1 d-flex justify-content-between align-items-center">
-                        <h5 class="card-title">Kategoriler</h5>
-                        <a href="kategori-ekle.html" class="btn btn-sm btn-primary">
+                        <h5 class="card-title">Categories</h5>
+                        <a asp-controller="Category" asp-action="Create" class="btn btn-sm btn-primary">
                             <i class="fa-solid fa-plus"></i>
                         </a>
                     </div>
@@ -18,9 +18,9 @@
                                 <thead class="table-secondary">
                                     <tr>
                                         <th>Id</th>
-                                        <th>Kategori Adı</th>
-                                        <th>Url</th>
-                                        <th>Ürün Sayısı</th>
+                                        <th>Category Name</th>
+                                        <th>Category Url</th>
+                                        <th>Product Count</th>
                                         <th style="width: 90px;"></th>
                                     </tr>
                                 </thead>

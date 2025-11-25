@@ -21,4 +21,22 @@ namespace dotnet_store.Controllers;
             }).ToList();
             return View(categories);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(string categoryName, string categoryUrl)
+        {
+
+            _context.Categories.Add(new Category
+            {
+                CategoryName = categoryName,
+                Url = categoryUrl
+            });
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
