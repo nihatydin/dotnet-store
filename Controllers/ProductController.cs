@@ -1,5 +1,6 @@
 using dotnet_store.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_store.Controllers;
 
@@ -14,7 +15,18 @@ public class ProductController : Controller
 
     public ActionResult Index()
     {
-        return View();
+        var products = _context.Products.Select(p=> new ProductGetModel
+        {
+            Id = p.Id,
+            ProductName = p.ProductName,
+            Price = p.Price,
+            Image = p.Image,
+            Active = p.Active,
+            isHome = p.isHome,
+            CategoryName = p.Category.CategoryName
+        }).ToList();
+
+        return View(products);
     }
 
     // Active products by category
