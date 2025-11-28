@@ -62,4 +62,31 @@ public class ProductController : Controller
 
         return View(product);
     }
+    public ActionResult Create()
+    {
+
+        ViewBag.Categories = _context.Categories.ToList();
+
+        return View();
+    }
+
+
+    [HttpPost]
+    public ActionResult Create(ProductCreateModel model)
+    {
+        var product = new Product
+        {
+            ProductName = model.ProductName,
+            Price = model.Price,
+            Description = model.Description,
+            isHome = model.isHome,
+            Active = model.Active,
+            CategoryId = model.CategoryId,
+            Image = "1.jpeg"
+        };
+        _context.Products.Add(product);
+        _context.SaveChanges();
+
+        return RedirectToAction("Index");
+    }
 }

@@ -27,13 +27,13 @@ namespace dotnet_store.Controllers;
             return View();
         }
         [HttpPost]
-        public IActionResult Create(string categoryName, string categoryUrl)
+        public IActionResult Create(CategoryCreateModel model)
         {
 
             _context.Categories.Add(new Category
             {
-                CategoryName = categoryName,
-                Url = categoryUrl
+                CategoryName = model.CategoryName,
+                Url = model.Url,
             });
             _context.SaveChanges();
 
