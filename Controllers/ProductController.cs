@@ -89,4 +89,53 @@ public class ProductController : Controller
 
         return RedirectToAction("Index");
     }
+
+    public ActionResult Edit(int id)
+    {
+        var entity = _context.Products.Select(i=> new ProductEditModel
+        {
+            Id = i.Id,
+            ProductName = i.ProductName,
+            Price = i.Price,
+            Description = i.Description,
+            isHome = i.isHome,
+            Active = i.Active,
+            CategoryId = i.CategoryId,
+            Image = i.Image
+        }).FirstOrDefault(p=> p.Id == id);
+
+        ViewBag.Categories = _context.Categories.ToList();
+
+        return View(entity);
+    }
+    [HttpPost]
+    public ActionResult Edit(int id, ProductEditModel model)
+    {
+        if(id != model.Id)
+        {
+            RedirectToAction("Index");
+        }
+
+        var entity = _context.Products.FirstOrDefault(p => p.Id == id);
+
+        if (entity != null)
+        {
+            entity.ProductName = model.ProductName;
+            entity.Price = model.Price;
+            entity.Description = model.Description;
+            entity.isHome = model.isHome;
+            entity.Active = model.Active;
+            entity.CategoryId = model.CategoryId;
+            // entity.Image = model.Image; // Image update not implemented
+
+            _context.SaveChanges();
+
+            TempData["Success"] = $"{entity.ProductName} has been updated successfully.";
+
+            return RedirectToAction("Index");
+        }
+
+        return View(model);
+    }
+
 }
