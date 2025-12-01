@@ -4,7 +4,7 @@ public class ProductCreateModel
 {
     public string ProductName { get; set; } = null!;
     public double Price { get; set; }
-    public string? Image { get; set; }
+    public IFormFile? Image { get; set; }
     public string Description { get; set; } = null!;
     public bool Active { get; set; }
     public bool isHome { get; set; }

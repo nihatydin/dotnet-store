@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using dotnet_store.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace dotnet_store.Controllers;
 
@@ -72,8 +74,15 @@ public class ProductController : Controller
 
 
     [HttpPost]
-    public ActionResult Create(ProductCreateModel model)
+    public async Task<ActionResult> Create(ProductCreateModel model)
     {
+        var fileName = Path.GetRandomFileName() + ".jpeg";
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/", fileName);
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await model.Image!.CopyToAsync(stream);
+        }
+
         var product = new Product
         {
             ProductName = model.ProductName,
@@ -82,7 +91,7 @@ public class ProductController : Controller
             isHome = model.isHome,
             Active = model.Active,
             CategoryId = model.CategoryId,
-            Image = "1.jpeg"
+            Image = fileName
         };
         _context.Products.Add(product);
         _context.SaveChanges();
@@ -101,7 +110,7 @@ public class ProductController : Controller
             isHome = i.isHome,
             Active = i.Active,
             CategoryId = i.CategoryId,
-            Image = i.Image
+            ImageName = i.Image
         }).FirstOrDefault(p=> p.Id == id);
 
         ViewBag.Categories = _context.Categories.ToList();
@@ -109,7 +118,7 @@ public class ProductController : Controller
         return View(entity);
     }
     [HttpPost]
-    public ActionResult Edit(int id, ProductEditModel model)
+    public async Task<ActionResult> Edit(int id, ProductEditModel model)
     {
         if(id != model.Id)
         {
@@ -118,15 +127,28 @@ public class ProductController : Controller
 
         var entity = _context.Products.FirstOrDefault(p => p.Id == id);
 
+        
+
         if (entity != null)
         {
+
+            if (model.ImageFile != null)
+            {
+                var fileName = Path.GetRandomFileName() + ".jpeg";
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/", fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await model.ImageFile!.CopyToAsync(stream);
+                }
+                entity.Image = fileName;
+            }
+
             entity.ProductName = model.ProductName;
             entity.Price = model.Price;
             entity.Description = model.Description;
             entity.isHome = model.isHome;
             entity.Active = model.Active;
             entity.CategoryId = model.CategoryId;
-            // entity.Image = model.Image; // Image update not implemented
 
             _context.SaveChanges();
 
